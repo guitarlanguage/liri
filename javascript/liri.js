@@ -7,22 +7,22 @@ var Twitter = require('twitter');
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
-
+argControl();
 //function to determine the argv and which way to go
-// function argControl() {
-//     if (process.argv[2] === "my-tweets") {
-//         twitterLogic();
-//     } else if (process.argv[2] === "spotify-this-song") {
-//         //some function
-//     } else if (process.argv[2] === "movie-this") {
-//         //some function
-//     } else if (process.argv[2] === "do-what-it-says") {
-//         //some function
-//     } else {
-//         return;
-//     }
-//
-// };
+function argControl() {
+    if (process.argv[2] === "my-tweets") {
+        twitterLogic();
+    } else if (process.argv[2] === "spotify-this-song") {
+        spotifyTune();
+    } //else if (process.argv[2] === "movie-this") {
+    //     //some function
+    // } else if (process.argv[2] === "do-what-it-says") {
+    //     //some function
+    // } else {
+    //     return;
+    // }
+
+};
 
 function twitterLogic() {
     //straight from api documentation
@@ -43,10 +43,10 @@ function twitterLogic() {
         }
     });
 };
-twitterLogic();
 
-//spotify logic straight from their documentation
+//function to parlay into the argControl function
 function spotifyTune() {
+    //spotify logic straight from their documentation
     spotify.search({
         type: 'track',
         query: 'All the Small Things'
@@ -63,7 +63,6 @@ function spotifyTune() {
     });
 
 };
-
 
 
 
