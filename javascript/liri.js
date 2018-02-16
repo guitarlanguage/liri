@@ -153,9 +153,10 @@ function movieThis(title) {
     // And do a little for-loop magic to handle the inclusion of "+"s
     for (var i = 3; i < nodeArgs.length; i++) {
 
-        if (i > 2 && i < nodeArgs.length) {
+        if (i > 3 && i < nodeArgs.length) {
             //this code works with the omdbapi api.
-            movieName = nodeArgs[i];
+            movieName = movieName + "+" + nodeArgs[i];
+            console.log(movieName);
 
         } else if (i < 4) {
 
