@@ -62,22 +62,20 @@ function twitterLogic() {
 function spotifyTune() {
     var nodeArgs = process.argv;
     var songName = "";
-    console.log(nodeArgs.slice(3).join(" "));
+    // console.log(nodeArgs.slice(3).join(" "));
 
     for (var i = 3; i < nodeArgs.length; i++) {
 
-        if (i > 2 && i < nodeArgs.length) {
+        if (i > 3 && i < nodeArgs.length) {
+            //converting nodeArgs to a string for better performance
             songName = nodeArgs.slice(3).join(" ");
-
-            // console.log(songName.split(" ,"));
-            // console.log(nodeArgs.slice(3).join(" ");
-
+            console.log(songName);
         } else {
-            // console.log(nodeArgs[i]);
+
             songName += nodeArgs[i];
         }
     }
-
+    // second loop to give us default tune (no 3rd argument? that's why i did this)
     for (var n = 2; n < nodeArgs.length; n++) {
         if (nodeArgs.length === 3) {
             songName = "I Want It That Way";
@@ -155,11 +153,12 @@ function movieThis(title) {
     // And do a little for-loop magic to handle the inclusion of "+"s
     for (var i = 3; i < nodeArgs.length; i++) {
 
-        if (i > 3 && i < nodeArgs.length) {
+        if (i > 2 && i < nodeArgs.length) {
+            //this code works with the omdbapi api.
             movieName = nodeArgs[i];
 
         } else if (i < 4) {
-            console.log(nodeArgs[i]);
+
             movieName += nodeArgs[i];
         }
     }
@@ -195,47 +194,3 @@ function movieThis(title) {
     });
 }
 //===================End of Logic for movieThis==========================
-
-
-
-
-
-
-
-
-
-
-//
-// // function spotify() {
-// //
-// // }
-// if(process.argv[2] === "my-tweets"){
-//     myTweets();
-// }
-//
-// if(process.argv[2] === "spotify-this-song"){
-//     spotifyThisSong();
-// }
-//
-//
-// var movieTitle = "";
-//
-//
-// function movieThis(title) {
-//     if(title) {
-//         console.log(title)
-//     } else {
-//         process.argv[3];
-//     }
-// }
-//
-// // variable to contain process.argv
-// var inputString = process.argv;
-// //commands
-// var tweets= inputString[2];
-// console.log(tweets);
-// var spotifyThisSong = inputString[3];
-// console.log(spotifyThisSong);
-// var movieThis = inputString[4];
-// console.log(movieThis);
-// var doWhat = inputString[5];
