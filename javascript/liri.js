@@ -23,7 +23,7 @@ function argControl() {
     } else {
         console.log(`   Try one of the following commands:
                         node liri my-tweets |  node liri movie-this space jam
-                        node liri spotify-this-song enter sandman   |
+                        node liri spotify-this-song old devil moon   |
                         node liri do-what-it-says
                     `);
         return;
@@ -156,7 +156,6 @@ function movieThis(title) {
         if (i > 3 && i < nodeArgs.length) {
             //this code works with the omdbapi api.
             movieName = movieName + "+" + nodeArgs[i];
-            console.log(movieName);
 
         } else if (i < 4) {
 
