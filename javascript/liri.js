@@ -1,3 +1,4 @@
+// jshint esnext: true
 require("dotenv").config();
 var fs = require("fs");
 var keys = require("./keys");
@@ -16,20 +17,20 @@ function argControl() {
     } else if (process.argv[2] === "spotify-this-song") {
         spotifyTune();
     } else if (process.argv[2] === "movie-this") {
-        movieThis();
+        movieThis("Mr. Nobody");
     } else if (process.argv[2] === "do-what-it-says") {
         doWhatItSays()
     } else {
         console.log(`   Try one of the following commands:
                         node liri my-tweets |  node liri movie-this space jam
-                        node liri spotify-this-song enter sandmand   |
+                        node liri spotify-this-song enter sandman   |
                         node liri do-what-it-says
                     `);
         return;
     }
 
 };
-
+//====================logic for my-tweets========================
 function twitterLogic() {
     //straight from api documentation
     //twitter user parameter object
@@ -45,12 +46,19 @@ function twitterLogic() {
                 var created = tweets[i].created_at.slice(0, 30); //wanted to
                 //cut out the 0000, but that would have meant losing the year.
                 console.log(`tweet number ${count}: ${tweets[i].text} | created on: ${created}`);
+                console.log(`----------------------------------------------------------------------`);
             }
         }
     });
 };
+//===================End of twitterLogic function==============================
 
-// //function to parlay into the argControl function
+//===================Logic for spotifyThisSong=================================
+//This will show the following information about the song in your terminal/bash
+// window
+
+// Artist(s) |  The song's name |  A preview link of the song from Spotify
+//The album that the song is from
 function spotifyTune() {
     //spotify logic straight from their documentation
     spotify.search({
@@ -68,7 +76,9 @@ function spotifyTune() {
     });
 
 };
-
+//===================End of Logic for spotifyThisSong==========================
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//===================Logic for doWhatItSays====================================
 function doWhatItSays() {
     //Using the fs Node package, LIRI will take the text inside of
     //random.txt and then use it to call one of LIRI's commands.
@@ -98,26 +108,34 @@ function doWhatItSays() {
 
     //Feel free to change the text in that document to test out the feature for other commands.
 };
+//===================End of Logic for doWhatItSays==========================
 
-function movieThis() {
+//===================Logic for movieThis====================================
+function movieThis(title) {
     var nodeArgs = process.argv;
     // Create an empty variable for holding the movie name
     var movieName = "";
     // Loop through all the words in the node argument
     // And do a little for-loop magic to handle the inclusion of "+"s
-    for (var i = 4; i < nodeArgs.length; i++) {
-        if (i > 4 && i < nodeArgs.length) {
-            movieName = movieName + "+" + nodeArgs[i];
-        } else {
+    for (var i = 3; i < nodeArgs.length; i++) {
+
+        if (i > 3 && i < nodeArgs.length) {
+            movieName = nodeArgs[i];
+
+        } else if (i < 4) {
+            console.log(nodeArgs[i]);
             movieName += nodeArgs[i];
+        }
+    }
+
+    for (var n = 2; n < nodeArgs.length; n++) {
+        if (nodeArgs.length === 3) {
+            movieName = "Mr. Nobody";
         }
     }
 
     // Then run a request to the OMDB API with the movie specified
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-
-    // This line is just to help us debug against the actual URL.
-    console.log(queryUrl);
 
     request(queryUrl, function(error, response, body) {
 
@@ -139,8 +157,8 @@ function movieThis() {
             // console.log("body: " + JSON.stringify(body, null, 2));
         }
     });
-};
-
+}
+//===================End of Logic for movieThis==========================
 
 
 
