@@ -60,16 +60,50 @@ function twitterLogic() {
 // Artist(s) |  The song's name |  A preview link of the song from Spotify
 //The album that the song is from
 function spotifyTune() {
+    var nodeArgs = process.argv;
+    var songName = "";
+    console.log(nodeArgs.slice(3).join(" "));
+
+    for (var i = 3; i < nodeArgs.length; i++) {
+
+        if (i > 2 && i < nodeArgs.length) {
+            songName = nodeArgs.slice(3).join(" ");
+
+            // console.log(songName.split(" ,"));
+            // console.log(nodeArgs.slice(3).join(" ");
+
+        } else {
+            // console.log(nodeArgs[i]);
+            songName += nodeArgs[i];
+        }
+    }
+
+    for (var n = 2; n < nodeArgs.length; n++) {
+        if (nodeArgs.length === 3) {
+            songName = "I Want It That Way";
+        }
+    }
     //spotify logic straight from their documentation
     spotify.search({
         type: 'track',
-        query: 'All the Small Things',
+        query: songName,
+
     }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         } else {
-            // for (var s = 0; s < data.length; s++) {
-            console.log(JSON.stringify(data, null, 2));
+
+            // Artist(s)
+            console.log(JSON.stringify("Artists Name: " + data.tracks.items[0].album.artists[0].name, null, 2));
+            console.log(`---------------------------------------`);
+            // The song's name
+            console.log(JSON.stringify("Song Name: " + data.tracks.items[0].name, null, 2));
+            console.log(`---------------------------------------`);
+            // A preview link of the song from Spotify
+            console.log(JSON.stringify("Preview Link: " + data.tracks.items[0].preview_url, null, 2));
+            console.log(`---------------------------------------`);
+            // The album that the song is from
+            console.log(JSON.stringify("Album Title: " + data.tracks.items[0].album.name, null, 2));
             //data.tracks.items[s].album.name
             // }
         }
@@ -100,12 +134,14 @@ function doWhatItSays() {
 
         // Then split it by commas (to make it more readable)
         var dataArr = data.split(",");
-
+        var songString = dataArr.slice(1).join();
         // We will then re-display the content as an array for later use.
-        console.log(dataArr);
+        console.log(songString);
+        return songString;
+
 
     });
-
+    spotifyTune();
     //Feel free to change the text in that document to test out the feature for other commands.
 };
 //===================End of Logic for doWhatItSays==========================
